@@ -18,9 +18,12 @@ endif
 	@echo 'MONITORING_ROLE_INSTANCE=$(MONITORING_ROLE_INSTANCE)' > config/mdsd/mdsd.env
 
 .PHONY: deploy
-deploy:
-	cd config && kustomize edit set image chewong/mdsd:latest=$(IMAGE_TAG)
+deploy: mdsd-env download-certs
 	kustomize build config/ | kubectl apply -f -
+
+.PHONY: undeploy
+undeploy:
+	kustomize build config/ | kubectl delete -f -
 
 .PHONY: deploy
 build:

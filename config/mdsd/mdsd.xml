@@ -118,22 +118,4 @@
       </MdsdEventSource>
     </MdsdEvents>
   </Events>
-  <EventStreamingAnnotations>
-    <EventStreamingAnnotation name="^.*$">
-      <Cosmos>
-        <Content><![CDATA[ <Config /> ]]></Content>
-      </Cosmos>
-      <LogAnalytics>
-        <Content>LogAnalyticsContent</Content>
-      </LogAnalytics>
-    </EventStreamingAnnotation>
-    <EventStreamingAnnotation name="syslog">
-      <Cosmos>
-        <Content><![CDATA[ <Config /> ]]></Content>
-      </Cosmos>
-      <LogAnalytics>
-        <Content>LogAnalyticsContent</Content>
-      </LogAnalytics>
-    </EventStreamingAnnotation>
-  </EventStreamingAnnotations>
 </MonitoringManagement>

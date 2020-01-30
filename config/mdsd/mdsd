@@ -35,10 +35,10 @@ export MONITORING_GCS_ACCOUNT=AzureUpstreamInfra
 # The region GCS should use when it determines which storage account credentials it should return to MA. e.g. "westus", "eastus".
 # Generally, it's best to obtain this value on the VM hosting the agent by querying the Azure Instance Metadata Service (IMDS) for the "location" value (see above code snippet).
 #
-# export MONITORING_GCS_REGION=westus
+export MONITORING_GCS_REGION=westus
 # or, pulling data from IMDS
-imdsURL="http://169.254.169.254/metadata/instance/compute/location?api-version=2017-04-02\&format=text"
-export MONITORING_GCS_REGION="$(curl -H Metadata:True --silent $imdsURL)"
+# imdsURL="http://169.254.169.254/metadata/instance/compute/location?api-version=2017-04-02\&format=text"
+# export MONITORING_GCS_REGION="$(curl -H Metadata:True --silent $imdsURL)"
 
 # REQUIRED
 # Full path to public certificate file used to authenticate mdsd with GCS service.

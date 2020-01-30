@@ -1,31 +1,33 @@
+namespace: monitoring
+
 resources:
-  - namespace.yaml
-  - fluent-bit-geneva-logging.yaml
-  - role-binding.yaml
-  - role.yaml
-  - service-account.yaml
+- namespace.yaml
+- fluent-bit-geneva-logging.yaml
+- role-binding.yaml
+- role.yaml
+- service-account.yaml
 
 configMapGenerator:
-  - name: mdsd-config
-    envs:
-      - mdsd/mdsd.env
-    files:
-      - mdsd/mdsd
-      - mdsd/mdsd.xml
-      - mdsd/mdsautokey.cfg
-  - name: fluent-bit-config
-    files:
-      - fluent-bit/fluent-bit.conf
-      - fluent-bit/input-kubernetes.conf
-      - fluent-bit/filter-kubernetes.conf
-      - fluent-bit/output-mdsd.conf
-      - fluent-bit/parsers.conf
+- envs:
+  - mdsd/mdsd.env
+  files:
+  - mdsd/mdsd
+  - mdsd/mdsd.xml
+  - mdsd/mdsautokey.cfg
+  name: mdsd-config
+- files:
+  - fluent-bit/fluent-bit.conf
+  - fluent-bit/input-kubernetes.conf
+  - fluent-bit/filter-kubernetes.conf
+  - fluent-bit/output-mdsd.conf
+  - fluent-bit/parsers.conf
+  name: fluent-bit-config
 
 secretGenerator:
-  - name: mdsd-certificates
-    files:
-      - gcscert.pem
-      - gcskey.pem
+- files:
+  - gcscert.pem
+  - gcskey.pem
+  name: mdsd-certificates
 
 generatorOptions:
   disableNameSuffixHash: true
