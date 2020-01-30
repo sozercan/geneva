@@ -2,6 +2,11 @@ REGISTRY ?= chewong
 IMAGE_NAME := mdsd
 IMAGE_VERSION ?= latest
 IMAGE_TAG := $(REGISTRY)/$(IMAGE_NAME):$(IMAGE_VERSION)
+KUSTOMIZE := $(PWD)/kustomize
+
+.PHONY: download-kustomize
+download-kustomize:
+	curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash || true
 
 .PHONY: download-certs
 download-certs:
@@ -18,12 +23,12 @@ endif
 	@echo 'MONITORING_ROLE_INSTANCE=$(MONITORING_ROLE_INSTANCE)' > config/mdsd/mdsd.env
 
 .PHONY: deploy
-deploy: mdsd-env download-certs
-	kustomize build config/ | kubectl apply -f -
+deploy: download-kustomize mdsd-env download-certs
+	$(KUSTOMIZE) build config/ | kubectl apply -f -
 
 .PHONY: undeploy
 undeploy:
-	kustomize build config/ | kubectl delete -f -
+	$(KUSTOMIZE) build config/ | kubectl delete -f -
 
 .PHONY: deploy
 build:
@@ -35,4 +40,4 @@ push:
 
 .PHONY: clean
 clean:
-	@rm -f config/*.pem config/mdsd/mdsd.env
+	@rm -f config/*.pem config/mdsd/mdsd.env $(KUSTOMIZE)

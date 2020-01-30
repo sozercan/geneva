@@ -8,3 +8,4 @@ config/gcskey.pem
 # tools
 skaffold.yaml
 .DS_Store
+kustomize
