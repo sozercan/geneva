@@ -1,4 +1,6 @@
-# fluent-bit-geneva-logging
+# Geneva
+
+A collection of images and Kubernetes manifests that send logs and metrics to Geneva.
 
 ## Quickstart
 
@@ -10,7 +12,7 @@ kubectl get pod --namespace monitoring
 
 ## Build Linux Monitoring Agent (MDSD) Image
 
-`REGISTRY=<your Dockerhub username> IMAGE_VERSION=<image version> make image push`
+`REGISTRY=<your Dockerhub username> IMAGE_VERSION=<image version> make image-mdsd push-mdsd`
 
 ## Debug MDSD
 
@@ -23,6 +25,10 @@ cat /var/log/mdsd.info
 # Print stderr of mdsd
 cat /var/log/mdsd.err
 ```
+
+## Build Geneva Metrics Image
+
+`REGISTRY=<your Dockerhub username> IMAGE_VERSION=<image version> make image-metrics push-metrics`
 
 ## Useful Links
 

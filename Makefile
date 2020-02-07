@@ -1,7 +1,10 @@
 REGISTRY ?= chewong
-IMAGE_NAME := mdsd
-IMAGE_VERSION ?= latest
-IMAGE_TAG := $(REGISTRY)/$(IMAGE_NAME):$(IMAGE_VERSION)
+MDSD_IMAGE_NAME := mdsd
+MDSD_IMAGE_VERSION ?= latest
+MDSD_IMAGE_TAG := $(REGISTRY)/$(MDSD_IMAGE_NAME):$(MDSD_IMAGE_VERSION)
+METRICS_IMAGE_NAME := geneva-metrics
+METRICS_IMAGE_VERSION ?= latest
+METRICS_IMAGE_TAG := $(REGISTRY)/$(METRICS_IMAGE_NAME):$(MDSD_IMAGE_VERSION)
 KUSTOMIZE := $(PWD)/kustomize
 
 .PHONY: download-kustomize
@@ -30,13 +33,32 @@ deploy: download-kustomize mdsd-env download-certs
 undeploy:
 	$(KUSTOMIZE) build config/ | kubectl delete -f -
 
-.PHONY: deploy
-build:
-	docker build . -t $(IMAGE_TAG)
+.PHONY: image-mdsd
+image-mdsd:
+	docker build . -f Dockerfile.mdsd -t $(MDSD_IMAGE_TAG)
 
-.PHONY: push
-push:
-	docker push $(IMAGE_TAG)
+.PHONY: push-mdsd
+push-mdsd:
+	docker push $(MDSD_IMAGE_TAG)
+
+.PHONY: image-metrics
+image-metrics:
+	docker build . -f Dockerfile.metrics -t $(METRICS_IMAGE_TAG)
+
+.PHONY: push-metrics
+push-metrics:
+	docker push $(METRICS_IMAGE_TAG)
+
+.PHONY: run-metrics
+run-metrics: download-certs
+	docker run \
+		-d \
+		-v $(PWD)/config/gcscert.pem:/etc/certs/gcscert.pem \
+		-v $(PWD)/config/gcskey.pem:/etc/certs/gcskey.pem \
+		--rm \
+		--name geneva-metrics \
+		$(METRICS_IMAGE_TAG) \
+		MetricsExtension -Logger Console -FrontEndUrl https://az-compute.metrics.nsatc.net -CertFile /etc/certs/gcscert.pem -PrivateKeyFile /etc/certs/gcskey.pem -Input statsd_udp
 
 .PHONY: clean
 clean:
