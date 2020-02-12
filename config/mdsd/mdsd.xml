@@ -16,7 +16,7 @@
       AgentResourceUsage element's attributes.
     -->
     <AgentResourceUsage diskQuotaInMB="50000" cpuPercentUsage="50" />
-    <AgentMetrics mdmMonitoringAccount="aks-data-plane" />
+    <AgentMetrics mdmMonitoringAccount="AzureUpstreamInfra" />
   </Management>
   <Schemas>
     <Schema name="syslog">
@@ -50,8 +50,6 @@
     <Source name="cron" schema="syslog" />
     <Source name="user" schema="syslog" />
     <Source name="daemon" schema="syslog" />
-    <Source name="syslog" dynamic_schema="true"/>
-    <Source name="rawmetrics" dynamic_schema="true"/>
     <Source name="heartbeat" schema="azsecv1" />
     <Source name="baseline" schema="azsecv1" />
     <Source name="software" schema="azsecv1" />
@@ -60,6 +58,9 @@
     <Source name="alert" schema="azsecv2" />
     <Source name="audit" dynamic_schema="true" />
     <Source name="kubelog" dynamic_schema="true" />
+    <Source name="syslog" dynamic_schema="true" />
+    <Source name="rawmetrics" dynamic_schema="true" />
+    <Source name="testresult" dynamic_schema="true" />
   </Sources>
   <!-- Linux events documentation: https://jarvis.dc.ad.msft.net/?page=documents&section=9c95f4eb-8689-4c9f-81bf-82d688e860fd&id=762a440d-3a1e-4ff3-86d6-03c491c163b2   -->
   <!--
@@ -115,6 +116,9 @@
       </MdsdEventSource>
       <MdsdEventSource source="kubelog">
         <RouteEvent eventName="kubelog" priority="Normal" storeType="CentralBond" />
+      </MdsdEventSource>
+      <MdsdEventSource source="testresult">
+        <RouteEvent eventName="testresult" priority="Normal" storeType="CentralBond" />
       </MdsdEventSource>
     </MdsdEvents>
   </Events>

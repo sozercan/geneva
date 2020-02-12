@@ -6,6 +6,10 @@ METRICS_IMAGE_NAME := geneva-metrics
 METRICS_IMAGE_VERSION ?= latest
 METRICS_IMAGE_TAG := $(REGISTRY)/$(METRICS_IMAGE_NAME):$(MDSD_IMAGE_VERSION)
 KUSTOMIZE := $(PWD)/kustomize
+GENEVA_METRICS_CONTAINER_NAME := geneva-metrics
+ifdef JOB_ID
+GENEVA_METRICS_CONTAINER_NAME := $(GENEVA_METRICS_CONTAINER_NAME)-$(JOB_ID)
+endif
 
 .PHONY: download-kustomize
 download-kustomize:
@@ -56,7 +60,7 @@ run-metrics: download-certs
 		-v $(PWD)/config/gcscert.pem:/etc/certs/gcscert.pem \
 		-v $(PWD)/config/gcskey.pem:/etc/certs/gcskey.pem \
 		--rm \
-		--name geneva-metrics \
+		--name $(GENEVA_METRICS_CONTAINER_NAME) \
 		$(METRICS_IMAGE_TAG) \
 		MetricsExtension -Logger Console -FrontEndUrl https://az-compute.metrics.nsatc.net -CertFile /etc/certs/gcscert.pem -PrivateKeyFile /etc/certs/gcskey.pem -Input statsd_udp
 
