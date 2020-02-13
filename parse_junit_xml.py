@@ -25,6 +25,7 @@ def parse_junit(junit_dir):
     xml = JUnitXml()
     xml.add_testsuite(test_suite)
     xml.write(os.path.join(junit_dir, "junit_combined.xml"))
+    xml.update_statistics()
 
     # JSON payload to be sent to Geneva
     payload = {
@@ -32,11 +33,14 @@ def parse_junit(junit_dir):
         "Namespace": "AzureUpstreamInfra",
         "Metric": "Canary Test Failure Rate",
         "Dims": {
-            "Job Name": os.getenv("JOB_NAME")
+            "Job Name": os.getenv("JOB_NAME"),
+            "Cluster Name": os.getenv("RESOURCE_GROUP")
         }
     }
 
-    test_failure_rate = int(math.ceil(xml.failures * 100 / xml.tests))
+    test_failure_rate = 0
+    if xml.tests != 0:
+        test_failure_rate = int(math.ceil(((xml.failures + xml.errors) * 100) / xml.tests))
     return "{}:{}|g".format(json.dumps(payload).replace("\n", ""), test_failure_rate)
 
 if __name__ == "__main__":
