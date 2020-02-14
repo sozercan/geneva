@@ -60,7 +60,9 @@
     <Source name="kubelog" dynamic_schema="true" />
     <Source name="syslog" dynamic_schema="true" />
     <Source name="rawmetrics" dynamic_schema="true" />
-    <Source name="testresult" dynamic_schema="true" />
+    <Source name="cpu" dynamic_schema="true" />
+    <Source name="memory" dynamic_schema="true" />
+    <Source name="disk" dynamic_schema="true" />
   </Sources>
   <!-- Linux events documentation: https://jarvis.dc.ad.msft.net/?page=documents&section=9c95f4eb-8689-4c9f-81bf-82d688e860fd&id=762a440d-3a1e-4ff3-86d6-03c491c163b2   -->
   <!--
@@ -117,8 +119,14 @@
       <MdsdEventSource source="kubelog">
         <RouteEvent eventName="kubelog" priority="Normal" storeType="CentralBond" />
       </MdsdEventSource>
-      <MdsdEventSource source="testresult">
-        <RouteEvent eventName="testresult" priority="Normal" storeType="CentralBond" />
+      <MdsdEventSource source="cpu">
+        <RouteEvent eventName="cpu" priority="Normal" storeType="CentralBond" />
+      </MdsdEventSource>
+      <MdsdEventSource source="memory">
+        <RouteEvent eventName="memory" priority="Normal" storeType="CentralBond" />
+      </MdsdEventSource>
+      <MdsdEventSource source="disk">
+        <RouteEvent eventName="disk" priority="Normal" storeType="CentralBond" />
       </MdsdEventSource>
     </MdsdEvents>
   </Events>

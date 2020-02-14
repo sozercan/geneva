@@ -18,6 +18,7 @@ configMapGenerator:
 - files:
   - fluent-bit/fluent-bit.conf
   - fluent-bit/input-kubernetes.conf
+  - fluent-bit/input-node-metrics.conf
   - fluent-bit/filter-kubernetes.conf
   - fluent-bit/output-mdsd.conf
   - fluent-bit/parsers.conf
