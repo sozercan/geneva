@@ -33,7 +33,7 @@ def parse_junit(junit_dir):
         "Namespace": "AzureUpstreamInfra",
         "Metric": "Canary Test Failure Rate",
         "Dims": {
-            "JobName": os.getenv("JOB_NAME"),
+            "JobName": os.getenv("AGENT_JOBNAME"),
             "ClusterName": os.getenv("RESOURCE_GROUP")
         }
     }
