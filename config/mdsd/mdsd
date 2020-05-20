@@ -24,18 +24,18 @@ export SSL_CERT_DIR=/etc/ssl/certs
 # For the full list of environments, see:
 # https://jarvis-west.dc.ad.msft.net/?page=documents&section=1363da01-b6ed-43d4-970e-f89b011d591f&id=d18a0cdb-eb0e-485b-b1bb-cbb6069d352b
 #
-export MONITORING_GCS_ENVIRONMENT=Test
+#export MONITORING_GCS_ENVIRONMENT=Test
 
 # REQUIRED
 # Geneva Account name
 #
-export MONITORING_GCS_ACCOUNT=AzureUpstreamInfra
+#export MONITORING_GCS_ACCOUNT=AzureUpstreamInfra
 
 # REQUIRED
 # The region GCS should use when it determines which storage account credentials it should return to MA. e.g. "westus", "eastus".
 # Generally, it's best to obtain this value on the VM hosting the agent by querying the Azure Instance Metadata Service (IMDS) for the "location" value (see above code snippet).
 #
-export MONITORING_GCS_REGION=westus
+#export MONITORING_GCS_REGION=westus
 # or, pulling data from IMDS
 # imdsURL="http://169.254.169.254/metadata/instance/compute/location?api-version=2017-04-02\&format=text"
 # export MONITORING_GCS_REGION="$(curl -H Metadata:True --silent $imdsURL)"
@@ -55,5 +55,5 @@ export MONITORING_GCS_NAMESPACE=AzureUpstreamInfra
 export MONITORING_CONFIG_VERSION=1.0
 export MONITORING_USE_GENEVA_CONFIG_SERVICE=true
 
-export MONITORING_TENANT=940f88ce-a64b-4e73-a258-9931349b9789
-export MONITORING_ROLE=canary
+#export MONITORING_TENANT=940f88ce-a64b-4e73-a258-9931349b9789
+#export MONITORING_ROLE=canary

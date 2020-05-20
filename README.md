@@ -6,7 +6,13 @@ A collection of images and Kubernetes manifests that send logs and metrics to Ge
 
 ```bash
 az login
-MONITORING_ROLE_INSTANCE=<your cluster name> make deploy
+export MONITORING_ROLE_INSTANCE=<your cluster name>
+export MONITORING_GCS_ENVIRONMENT=<geneva environment>
+export MONITORING_GCS_ACCOUNT=<geneva account>
+export MONITORING_GCS_REGION=<region>
+export MONITORING_TENANT=<tenant>
+export MONITORING_ROLE=<role>
+make deploy
 kubectl get pod --namespace monitoring
 ```
 
